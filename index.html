@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ping Pong</title>
+
+  <link href="style.css" rel="stylesheet" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js"></script>
+  <script src="app.js"></script>
+</head>
+<body ng-app="scoreKeeper" ng-controller="score">
+
+  <div class="screen screen-start" ng-if="!game.started">
+    <div class="scoreBoard">
+      <div class="team team-1">
+        <div class="player player-left">
+          <input type="text" ng-model="player1.name"></input>
+        </div>
+      </div>
+
+      <div class="team team-2">
+        <div class="player player-right">
+          <input type="text" ng-model="player2.name"></input>
+        </div>
+      </div>
+    </div>
+    <footer class="menu">
+      <div>
+        <button ng-click="startGame()">START</button>
+      </div>
+    </footer>
+  </div>
+
+  <div class="score" ng-if="player1.serving || player2.serving">
+    <span>{{player1.score}}</span>
+    <span>{{player2.score}}</span>
+  </div>
+
+  <div class="screen screen-game" ng-if="game.started">
+    <div class="scoreBoard">
+
+      <div class="team team-1" ng-click="addPoint(1)" ng-class="{'team__isServing':player1.serving}">
+        <header ng-class="{'serving__isServing':player1.serving, 'serving__isNotServing':!player1.serving}">{{player1.name}}</header>
+        <div class="player player-left player-alone"></div>
+      </div>
+
+      <div class="team team-2" ng-click="addPoint(2)" ng-class="{'team__isServing':player2.serving}">
+        <header ng-class="{'serving__isServing':player2.serving, 'serving__isNotServing':!player2.serving}">{{player2.name}}</header>
+        <div class="player player-right player-alone"></div>
+      </div>
+
+    </div>
+    <footer>{{footerMessage}}</footer>
+  </div>
+</body>
+</html>
